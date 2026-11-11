@@ -1,0 +1,406 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<meta name="color-scheme" content="light only">
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>St John's Mosley Common</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700&display=swap">
+<style>
+/* Layout: poster-style one-pager. Full-width colour bands (cobalt, sun, coral, ink) carry the energy;
+   giant uppercase headlines; one clear action (plan a visit); the diary is the working centre. */
+:root{
+  --bg:#ffffff; --fg:#14213a; --muted:#566079; --line:#d9dee8; --surface:#f2f4f8; --link:#1d3a6e;
+  --blue:#14274a; --on-blue:#ffffff; --sun:#d9b45a; --on-sun:#14213a;
+  --coral:#7d2233; --on-coral:#ffffff; --ink:#0f1c36; --on-ink:#ffffff;
+  --display:"Cormorant Garamond",Georgia,"Times New Roman",serif;
+  --body:"DM Sans","Segoe UI",system-ui,sans-serif;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font:400 1.0625rem/1.6 var(--body)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+a{color:var(--link);text-underline-offset:.18em}
+a:focus-visible,summary:focus-visible{outline:3px solid var(--coral);outline-offset:3px}
+h1,h2,h3{margin:0;text-wrap:balance}
+h1,h2{font-family:var(--display);font-weight:600;line-height:1.02}
+h2{font-size:clamp(2rem,6vw,3.6rem)}
+h3{font:700 1.3rem/1.2 var(--body)}
+p{margin:0;max-width:62ch}
+.wrap{max-width:1120px;margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.label{font:700 .82rem/1.2 var(--body);letter-spacing:.12em;text-transform:uppercase}
+.muted{color:var(--muted)}
+.sel{user-select:all;font-weight:700;overflow-wrap:anywhere}
+.btn{display:inline-block;font:700 1.05rem var(--body);text-decoration:none;padding:.7rem 1.2rem;border-radius:6px;border:2px solid transparent;transition:transform .15s}
+.btn:hover{transform:translateY(-2px)}
+.btn.sun{background:var(--sun);color:var(--on-sun)}
+.btn.ghost{border-color:currentColor;color:inherit}
+
+.demo{background:var(--coral);color:var(--on-coral);font-size:.9rem;font-weight:600}
+.demo .wrap{padding-block:.4rem}
+
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+header.top .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.3rem 1.5rem;padding-block:.65rem}
+.brand{font:700 1.4rem/1.1 var(--display);color:var(--fg);text-decoration:none;display:flex;align-items:center;gap:.6rem;min-width:0}
+.brand img{width:40px;height:40px;flex:none}
+.brand .bt{display:block}
+.brand .bt span{color:var(--link)}
+.brand small{display:block;font:700 .68rem/1.4 var(--body);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.atmc{width:120px;height:120px}
+nav{display:flex;flex-wrap:wrap;align-items:center;gap:.2rem 1.1rem}
+nav a{color:var(--fg);text-decoration:none;font-weight:600;font-size:.98rem}
+nav a:hover{color:var(--link)}
+nav a.cta{background:var(--blue);color:var(--on-blue);padding:.35rem .9rem;border-radius:6px}
+
+.hero{background:var(--blue);color:var(--on-blue);position:relative;overflow:hidden}
+.hero .wrap{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:2.5rem;padding-block:clamp(1.5rem,4vw,3rem);align-items:center}
+.hero h1{font-size:clamp(2.3rem,6vw,4.4rem);margin-top:.4rem}
+.hero h1 span{color:var(--sun)}
+.hero .lede{font-size:1.15rem;line-height:1.45;margin-top:.8rem;max-width:40ch}
+.actions{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:1.2rem}
+.sunday{background:var(--bg);color:var(--fg);padding:1.2rem 1.4rem;border-radius:6px;border-top:4px solid var(--sun);display:grid;gap:.35rem}
+.sunday .time{font:700 clamp(2.2rem,6vw,3.6rem)/1 var(--body);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.sunday .what{font:700 1.4rem/1.2 var(--body)}
+.sunday p{font-size:1rem}
+
+.ticker{display:none;background:var(--sun);color:var(--on-sun);overflow:hidden;white-space:nowrap;border-block:3px solid var(--on-sun)}
+.ticker div{display:inline-block;padding-block:.6rem;font:400 1.15rem var(--display);text-transform:uppercase;animation:slide 40s linear infinite}
+.ticker span{margin-inline:1.2rem}
+@keyframes slide{to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.ticker div{animation:none}.btn{transition:none}}
+
+.verse .wrap{justify-items:center;text-align:center;gap:1rem;padding-block:clamp(2.5rem,6vw,4rem)}
+.verse .label{color:var(--link)}
+.verse blockquote{margin:0;font:600 clamp(1.6rem,4vw,2.4rem)/1.25 var(--display);max-width:32ch;text-wrap:balance}
+.verse cite{font-style:normal;font-weight:700;color:var(--muted)}
+section{scroll-margin-top:4.5rem}
+section .wrap{padding-block:clamp(3rem,7vw,5rem);display:grid;gap:2rem}
+.head{display:grid;gap:.7rem}
+.head p{max-width:80ch}
+.tel{white-space:nowrap}
+.head .label{color:var(--link)}
+.b-blue{background:var(--blue);color:var(--on-blue)}
+.b-coral{background:var(--coral);color:var(--on-coral)}
+.b-ink{background:var(--ink);color:var(--on-ink)}
+.b-soft{background:var(--surface)}
+.b-blue .head .label,.b-coral .head .label,.b-ink .head .label{color:inherit;opacity:.8}
+.b-blue a,.b-coral a,.b-ink a{color:inherit}
+.b-blue .muted,.b-coral .muted,.b-ink .muted{color:inherit;opacity:.8}
+
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,17rem),1fr));gap:1.25rem}
+.step{background:var(--bg);color:var(--fg);border-radius:6px;padding:1.5rem;display:grid;gap:.5rem;align-content:start}
+.step .big{font:700 1.8rem/1.1 var(--body);color:var(--link)}
+
+.photos{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,15rem),1fr));gap:1rem}
+.photos figure{margin:0;display:grid;gap:.4rem}
+.photos img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:6px}
+.photos figcaption{font-size:.92rem;color:var(--muted)}
+.photo{aspect-ratio:4/3;max-width:100%;border-radius:6px;border:2px dashed var(--line);display:grid;place-content:center;text-align:center;padding:1rem;color:var(--muted);font-weight:600;background:var(--surface)}
+
+.diary{display:grid;border-top:3px solid var(--fg)}
+.day{display:grid;grid-template-columns:10rem minmax(0,1fr);gap:.4rem 1.5rem;padding-block:1rem;border-bottom:1px solid var(--line)}
+.date{font:700 1.5rem/1.1 var(--display)}
+.day.today .date{color:var(--link)}
+.date small{display:block;font:400 .92rem var(--body);color:var(--muted);text-transform:none;margin-top:.2rem}
+.evs{display:grid;gap:.6rem}
+.ev{display:grid;grid-template-columns:5.2rem minmax(0,1fr);gap:.75rem}
+.ev time{font-variant-numeric:tabular-nums;font-weight:700}
+.ev b{font-weight:700}
+.ev span{display:block;color:var(--muted);font-size:.97rem}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,17rem),1fr));gap:1.25rem}
+.card{background:var(--surface);border-radius:6px;padding:1.4rem;display:grid;gap:.45rem;align-content:start;min-width:0}
+.b-blue .card,.b-coral .card,.b-soft .card{background:var(--bg);color:var(--fg)}
+.card .when{font-weight:700;color:var(--link)}
+.card{border-top:3px solid var(--sun)}
+.grid.four{grid-template-columns:repeat(4,minmax(0,1fr));gap:1rem}
+.grid.four .card{padding:1.1rem}
+.grid.four .card h3{font-size:1.15rem}
+@media (max-width:900px){.grid.four{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.grid.four{grid-template-columns:minmax(0,1fr)}}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,22rem),1fr));gap:1.25rem}
+ol.vision{margin:0;padding-left:1.3rem;display:grid;gap:.5rem;max-width:70ch}
+details summary{cursor:pointer;font-weight:700;color:var(--link)}
+details[open] summary{margin-bottom:.9rem}
+.sub{margin-top:.8rem}
+
+dl.team{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,15rem),1fr));gap:1.2rem 2rem;margin:0}
+dl.team dt{font-size:.9rem;color:var(--muted)}
+dl.team dd{margin:0;font-weight:700;font-size:1.1rem}
+address{font-style:normal;font-size:1.2rem;font-weight:600}
+
+.tablewrap{overflow-x:auto}
+table{border-collapse:collapse;font-size:.95rem;min-width:34rem}
+th,td{text-align:left;padding:.45rem 1rem .45rem 0;border-bottom:1px solid var(--line);white-space:nowrap}
+th{color:var(--muted);font-weight:600}
+
+footer .wrap{padding-block:2rem;font-size:.95rem;color:var(--muted);display:grid;gap:.4rem}
+
+@media (max-width:760px){
+  .hero .wrap{grid-template-columns:minmax(0,1fr);gap:1.25rem}
+  .hero .label{display:none}
+  .hero h1{margin-top:0}
+  .btn{font-size:1rem;padding:.65rem 1rem}
+  .sunday{grid-template-columns:auto minmax(0,1fr);align-items:center;column-gap:.9rem;padding:.9rem 1.1rem}
+  .sunday .label,.sunday p{grid-column:1/-1;display:block}
+  .sunday .what{font-size:1.2rem}
+  header.top .wrap{flex-wrap:nowrap}
+  .brand{font-size:1.05rem}
+  .brand img{width:34px;height:34px}
+  .brand small{font-size:.6rem}
+  .brand .bt span{display:block}
+  nav{flex-wrap:nowrap;white-space:nowrap}
+  nav a:not(.cta){display:none}
+  .day{grid-template-columns:minmax(0,1fr)}
+  section{scroll-margin-top:4rem}
+}
+</style>
+
+<div class="demo"><div class="wrap">Design proposal for St John's Church. This is a demo, not the official website.</div></div>
+
+<header class="top"><div class="wrap">
+  <a class="brand" href="#top"><img src="cofe.png" alt="" width="40" height="40"><span class="bt"><small>The Church of England</small>St John's Church, <span>Mosley Common</span></span></a>
+  <nav aria-label="Sections">
+    <a class="keep" href="#diary">What's on</a><a href="#families">Kids</a><a href="#community">Community</a>
+    <a href="#faith">Faith</a><a href="#team">Team</a><a href="#contact">Contact</a><a class="cta" href="#new">I'm new</a>
+  </nav>
+</div></header>
+
+<div class="hero" id="top"><div class="wrap">
+  <div>
+    <p class="label">The Church of England · St John's Church · Mosley Common</p>
+    <h1>You're <span>welcome</span> here.</h1>
+    <p class="lede">A friendly church for all ages and backgrounds, making Jesus known in Mosley Common since 1887.</p>
+    <div class="actions"><a class="btn sun" href="#new">Plan your first visit</a><a class="btn ghost" href="#diary">See what's on</a></div>
+  </div>
+  <div class="sunday" aria-live="polite">
+    <span class="label" id="sun-date">Every Sunday</span>
+    <span class="time">10:00</span>
+    <span class="what" id="sun-what">Sunday service</span>
+    <p>Mosley Common Road, M28 1AN</p>
+  </div>
+</div></div>
+
+<div class="ticker" aria-hidden="true"><div>
+  <span>Café Church</span>★<span>Messy Church</span>★<span>Parent &amp; Toddler</span>★<span>Place of Welcome Café</span>★<span>Community Garden</span>★<span>Foodbank</span>★<span>House Groups</span>★
+  <span>Café Church</span>★<span>Messy Church</span>★<span>Parent &amp; Toddler</span>★<span>Place of Welcome Café</span>★<span>Community Garden</span>★<span>Foodbank</span>★<span>House Groups</span>★
+</div></div>
+
+<section id="verse" class="verse b-soft"><div class="wrap">
+  <p class="label">Verse of the day</p>
+  <blockquote id="verse-text">Thy word is a lamp unto my feet, and a light unto my path.</blockquote>
+  <cite id="verse-ref">Psalm 119:105</cite>
+</div></section>
+
+<section id="new"><div class="wrap">
+  <div class="head"><p class="label">New here?</p><h2>Come as you are</h2>
+  <p>You don't need to know anything, wear anything special or believe anything yet. Turn up on a Sunday and someone will say hello.</p></div>
+  <div class="steps">
+    <div class="step b-soft"><span class="big">Sundays 10am</span><h3>Three kinds of Sunday</h3><p>Holy Communion, a Service of the Word, or relaxed Café Church. They take turns through the month.</p></div>
+    <div class="step b-soft"><span class="big">All ages</span><h3>Bring the children</h3><p>Sunday School, a toddler group on Thursdays and Messy Church after school. All leaders are DBS checked.</p></div>
+    <div class="step b-soft"><span class="big">Not just Sunday</span><h3>Start with a brew</h3><p>The Place of Welcome Café is open on Tuesdays at 10am. Drop in, no booking.</p></div>
+  </div>
+  <div class="photos">
+    <figure><img src="congregation.jpg" alt="A full congregation seen from the balcony at St John's"><figcaption>A full church on a Sunday</figcaption></figure>
+    <figure><img src="church.jpg" alt="St John's Church seen from the path, with its stone porch and large window"><figcaption>St John's Church, Mosley Common</figcaption></figure>
+    <figure><img src="window.jpg" alt="Evening light through the great window"><figcaption>Evening light through the great window</figcaption></figure>
+  </div>
+</div></section>
+
+<section id="diary" class="b-soft"><div class="wrap">
+  <div class="head"><p class="label">What's on</p><h2>The next seven days</h2></div>
+  <div class="diary" id="diary-list"></div>
+</div></section>
+
+<section id="weekly"><div class="wrap">
+  <div class="head"><p class="label">Every week</p><h2>Something for everyone</h2>
+  <p class="muted">Everyone is welcome at all of these. Just turn up.</p></div>
+  <div class="grid" id="weekly-list"></div>
+</div></section>
+
+<section id="families" class="b-soft"><div class="wrap">
+  <div class="head"><p class="label">Children and families</p><h2>Toddlers to teens</h2>
+  <p>Children and young people are an important part of our church family. All leaders are DBS checked and work within our child protection policy. Questions? Ring Adele on <span class="sel tel">01942 888786</span>.</p></div>
+  <div class="grid four">
+    <div class="card"><h3>Messy Church</h3><p class="when" id="messy-when">Next: Friday 27 November, 3.15pm to about 5.30pm</p><p>Crafts, celebration, games and a sit-down meal together, at St John's School. Children, you must bring an adult!</p><p class="muted sel">messychurch@mosleycommonchurch.org.uk</p></div>
+    <div class="card"><h3>Parent and Toddler Group</h3><p class="when">Thursdays, 9.30am to 11.00am</p><p>Come along with your baby or toddler for play, a brew and a chat with other parents and carers.</p></div>
+    <div class="card"><h3>Sunday School</h3><p class="when">Sundays, 10.00am</p><p>Groups meet weekly and give a warm welcome to new members.</p></div>
+    <div class="card"><h3>St John's School</h3><p class="when">Founded 1822</p><p>Our church school has served the village since 65 years before the church was built. We work closely together.</p></div>
+  </div>
+</div></section>
+
+<section id="community"><div class="wrap">
+  <div class="head"><p class="label">Community</p><h2>In the heart of the village</h2></div>
+  <div class="two">
+    <div class="card"><h3>Woodland, Wildlife and Wellbeing Garden</h3>
+      <p>The land between the brook and the church is becoming a community garden for everyone. A new path, funded and built by Parr Bridge Retail Park, now links Church Vale through the church grounds to Mosley Common Road, the shops and the school.</p>
+      <p>There are plenty of ideas for what comes next. They depend on funding and on volunteers.</p></div>
+    <div class="card"><h3>Eco Church</h3>
+      <p class="when">Bronze award from A Rocha · working towards Silver</p>
+      <h3 class="sub">Foodbank collection</h3>
+      <p class="when">Saturday mornings, 10.00am, monthly. See the diary.</p>
+      <p>Bring donations to church. Everything collected goes to local people.</p></div>
+  </div>
+</div></section>
+
+<section id="faith" class="b-blue"><div class="wrap">
+  <div class="head"><p class="label">Faith and prayer</p><h2>Go deeper</h2></div>
+  <div class="two">
+    <div class="card"><h3>House groups</h3>
+      <p>Informal, relaxed groups that meet to discuss the Bible and what it means for life today, and to pray for and support one another. New members are always welcome.</p>
+      <p><b>Thursdays:</b> 1st and 3rd of the month, 8.00pm, in Astley. Currently The Prayer Course. Ring Mike Stuckey, <span class="sel tel">0161 357 0155</span>.</p>
+      <p><b>Tuesdays:</b> every other week, 8.00pm to 9.30pm, church lounge. Led by Sarah Hughes.</p></div>
+    <div class="card"><h3>Need prayer?</h3>
+      <p>Our prayer chain is a small team who will pray for any urgent request. Everything is handled in confidence.</p>
+      <p>Nick and Adele Hardman, <span class="sel tel">01942 888786</span><br>Glennys Worthington, <span class="sel tel">07743 271141</span></p>
+      <h3 class="sub">Mission</h3>
+      <p>We support people and organisations working in Croatia, India and the UK with prayer, money and practical help. Graham Ridge is our mission co-ordinator.</p></div>
+  </div>
+  <details class="card"><summary>Read our vision statement</summary>
+    <p style="margin-bottom:.9rem">As Christians we are called by Christ first and foremost to be wholeheartedly committed to Him as our Saviour and Lord, and called together to be part of His people, the church. As a local church we aim to be committed to:</p>
+    <ol class="vision">
+      <li>worshipping the living Lord regularly, in a way that honours God, reflects the community and attracts newcomers;</li>
+      <li>praying for God's work in the parish, the nation and across His world, and for one another;</li>
+      <li>sensitively sharing the good news of Jesus with those around us, wherever He has placed us;</li>
+      <li>allowing the Holy Spirit to help us grow in Christian maturity and form the character of Jesus within us;</li>
+      <li>seeking out the gifts of every church member and encouraging their use in the service of Christ;</li>
+      <li>encouraging and supporting every church member in every practical way, building up the church in love;</li>
+      <li>our community, showing God's love by our concern for those who suffer and our search for justice and reconciliation;</li>
+      <li>actively supporting those involved in mission work, at home and abroad.</li>
+    </ol>
+  </details>
+</div></section>
+
+<section id="team"><div class="wrap">
+  <div class="head"><p class="label">Who's who</p><h2>Meet the team</h2>
+  <img class="atmc" src="atmc.jpg" alt="Astley, Tyldesley and Mosley Common Team Ministry logo" width="120" height="120">
+  <p>St John's is one of three Church of England parishes in the Astley, Tyldesley and Mosley Common Team Ministry, with St Stephen's Astley, St George's Tyldesley and The Mission church at Shakerley Community Centre. We also work with our neighbours in Churches Together in Boothstown.</p></div>
+  <dl class="team" id="team-list"></dl>
+</div></section>
+
+<section id="contact" class="b-ink"><div class="wrap">
+  <div class="head"><p class="label">Contact</p><h2>See you Sunday</h2></div>
+  <div class="two">
+    <div style="display:grid;gap:.8rem;align-content:start">
+      <address>St John's Church<br>Mosley Common Road<br>Mosley Common<br>Manchester M28 1AN</address>
+      <div class="actions" style="margin-top:.4rem"><a class="btn sun" href="https://www.google.com/maps/search/St+John's+Church+Mosley+Common+M28+1AN">Get directions</a></div>
+      <p>Team administrator: <span class="sel">atmcteamclerk@gmail.com</span></p>
+    </div>
+    <div style="display:grid;gap:.6rem;align-content:start"><h3>Safeguarding</h3>
+      <p>St John's Church has safeguarding policies in place. If you have a concern, please contact our Parish Safeguarding Co-ordinator, Sue Bloor, or see the Diocese of Manchester safeguarding pages.</p>
+      <p class="muted">On the live site a short “keep in touch” form will sit here, for the mailing list and prayer requests.</p></div>
+  </div>
+</div></section>
+
+<section class="b-soft"><div class="wrap">
+  <div class="head"><p class="label">For the church team</p><h2>Easy to keep up to date</h2>
+  <p>No website login and no code. The diary, the weekly groups and the team list are filled from one shared Google Sheet with three tabs. Change a row and the website changes. When the magazine comes out, add that month's dates and you are done.</p></div>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Tab</th><th>Columns</th><th>Example row</th></tr></thead>
+    <tbody>
+      <tr><td>Dates</td><td>Date · Time · What · Where</td><td>22 Nov 2026 · 10:00 · Holy Communion · Church</td></tr>
+      <tr><td>Every week</td><td>Day · Time · What · Details</td><td>Tuesday · 10:00 · Place of Welcome Café · Church lounge</td></tr>
+      <tr><td>Team</td><td>Role · Name</td><td>Church warden · Andrea Taziker</td></tr>
+    </tbody>
+  </table></div>
+  <p class="muted">In this demo the same rows are stored inside the page.</p>
+</div></section>
+
+<footer><div class="wrap">
+  <img src="cofe-full.png" alt="The Church of England" width="120" style="height:auto">
+  <span>The Church of England · St John's Church, Mosley Common · Astley, Tyldesley and Mosley Common Team Ministry · Diocese of Manchester</span>
+  <span>This website is provided by <a href="https://tyldesleymosley.co.uk">tyldesleymosley.co.uk</a>, courtesy of George Dobritoiu.</span>
+</div></footer>
+
+<script>
+/* ---- CONTENT: these lists mirror the Google Sheet tabs ---- */
+const WEEKLY = [
+  {day:1, time:"09:00", what:"Prayer Walk", where:"Shakerley", details:"Walking and praying around Shakerley."},
+  {day:2, time:"10:00", what:"Place of Welcome Café", where:"Church lounge", details:"Drop in for a brew and a chat."},
+  {day:4, time:"09:30", what:"Parent and Toddler Group", where:"Church", details:"Play, a brew and a chat. Until 11.00am."},
+  {day:5, time:"09:30", what:"Friday Team Prayers", where:"St George's Church, Tyldesley", details:"Half an hour of prayer with the team churches."},
+  {day:0, time:"10:00", what:"Sunday service", where:"Church", details:"Holy Communion, Service of the Word or Café Church, in turn."}
+];
+const FORTNIGHTLY = [{label:"Alternate Tuesdays", time:"13:15", what:"CAMEO Group", details:"An afternoon group. Newcomers welcome."}];
+const DATES = [
+  {date:"2026-11-15", time:"10:00", what:"Café Church", where:"Church"},
+  {date:"2026-11-22", time:"10:00", what:"Holy Communion", where:"Church"},
+  {date:"2026-11-24", time:"13:15", what:"CAMEO Group", where:"Church"},
+  {date:"2026-11-27", time:"15:15", what:"Messy Church", where:"St John's School"},
+  {date:"2026-11-28", time:"10:00", what:"Foodbank collection for local people", where:"Church"},
+  {date:"2026-11-29", time:"10:00", what:"Service of the Word", where:"Church"},
+  {date:"2026-12-06", time:"10:00", what:"Café Church", where:"Church"}
+];
+const TEAM = [
+  ["Team Rector","Rev'd Sachin Awale"],["Team Vicar","Currently in vacancy"],
+  ["Lay Readers","Mike Stuckey, David Kendrick"],
+  ["Children and families (ALM)","Sarah Hughes"],
+  ["Prayer, worship and ecology (ALM)","Nick Hardman"],
+  ["Church wardens","Andrea Taziker, Marjorie Owen"],["Treasurer","Marie Stuckey"],
+  ["PCC Secretary","Sarah Hughes"],["Safeguarding Co-ordinator","Sue Bloor"],["Mission co-ordinator","Graham Ridge"]
+];
+
+/* Verse of the day: King James Version (public domain), one per day in rotation */
+const VERSES = [
+  ["Thy word is a lamp unto my feet, and a light unto my path.","Psalm 119:105"],
+  ["The LORD is my shepherd; I shall not want.","Psalm 23:1"],
+  ["Come unto me, all ye that labour and are heavy laden, and I will give you rest.","Matthew 11:28"],
+  ["God is our refuge and strength, a very present help in trouble.","Psalm 46:1"],
+  ["This is the day which the LORD hath made; we will rejoice and be glad in it.","Psalm 118:24"],
+  ["We love him, because he first loved us.","1 John 4:19"],
+  ["Trust in the LORD with all thine heart; and lean not unto thine own understanding.","Proverbs 3:5"],
+  ["I can do all things through Christ which strengtheneth me.","Philippians 4:13"],
+  ["For God so loved the world, that he gave his only begotten Son, that whosoever believeth in him should not perish, but have everlasting life.","John 3:16"],
+  ["Let your light so shine before men, that they may see your good works, and glorify your Father which is in heaven.","Matthew 5:16"]
+];
+{const n=Math.floor(new Date().setHours(0,0,0,0)/864e5)%VERSES.length;
+ document.getElementById("verse-text").textContent=VERSES[n][0];
+ document.getElementById("verse-ref").textContent=VERSES[n][1];}
+
+const DAYS=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+const MONTHS=["January","February","March","April","May","June","July","August","September","October","November","December"];
+const iso=d=>d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+const nice=t=>{let [h,m]=t.split(":").map(Number);const ap=h>=12?"pm":"am";h=h%12||12;return h+"."+String(m).padStart(2,"0")+ap};
+const el=(tag,cls,text)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(text!=null)e.textContent=text;return e};
+
+function eventsOn(d){
+  const dated=DATES.filter(x=>x.date===iso(d));
+  const weekly=WEEKLY.filter(w=>w.day===d.getDay()&&!(d.getDay()===0&&dated.some(x=>x.time===w.time)));
+  return [...weekly,...dated].sort((a,b)=>a.time.localeCompare(b.time));
+}
+
+const today=new Date();today.setHours(0,0,0,0);
+const list=document.getElementById("diary-list");
+for(let i=0;i<7;i++){
+  const d=new Date(today);d.setDate(today.getDate()+i);
+  const evs=eventsOn(d);if(!evs.length)continue;
+  const row=el("div","day"+(i===0?" today":""));
+  const date=el("div","date",i===0?"Today":DAYS[d.getDay()]);
+  date.append(el("small",null,d.getDate()+" "+MONTHS[d.getMonth()]));
+  const box=el("div","evs");
+  evs.forEach(e=>{const r=el("div","ev");const t=el("time",null,nice(e.time));const b=el("div");
+    b.append(el("b",null,e.what),el("span",null,e.where));r.append(t,b);box.append(r)});
+  row.append(date,box);list.append(row);
+}
+
+const sun=new Date(today);sun.setDate(today.getDate()+((7-today.getDay())%7));
+const sunEv=eventsOn(sun).find(e=>e.time==="10:00");
+document.getElementById("sun-date").textContent=(sun.getTime()===today.getTime()?"Today, ":"This ")+"Sunday "+sun.getDate()+" "+MONTHS[sun.getMonth()];
+if(sunEv)document.getElementById("sun-what").textContent=sunEv.what;
+
+if(!DATES.find(x=>x.what==="Messy Church"&&x.date>=iso(today)))document.getElementById("messy-when").textContent="Next date to be announced";
+
+const wl=document.getElementById("weekly-list");
+const order=[1,2,3,4,5,6,0];
+[...WEEKLY].sort((a,b)=>order.indexOf(a.day)-order.indexOf(b.day)).forEach(w=>{
+  const it=el("div","card");it.append(el("h3",null,w.what),el("p","when",DAYS[w.day]+"s, "+nice(w.time)+" · "+w.where),el("p",null,w.details));wl.append(it)});
+FORTNIGHTLY.forEach(w=>{const it=el("div","card");it.append(el("h3",null,w.what),el("p","when",w.label+", "+nice(w.time)),el("p",null,w.details));wl.append(it)});
+
+const tl=document.getElementById("team-list");
+TEAM.forEach(([role,name])=>{const d=el("div");d.append(el("dt",null,role),el("dd",null,name));tl.append(d)});
+</script>
+
+</html>

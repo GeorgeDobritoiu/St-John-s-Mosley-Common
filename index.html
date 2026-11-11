@@ -44,8 +44,12 @@ p{margin:0;max-width:62ch}
 
 header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
 header.top .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.3rem 1.5rem;padding-block:.65rem}
-.brand{font:700 1.4rem var(--display);color:var(--fg);text-decoration:none}
-.brand span{color:var(--link)}
+.brand{font:700 1.4rem/1.1 var(--display);color:var(--fg);text-decoration:none;display:flex;align-items:center;gap:.6rem;min-width:0}
+.brand img{width:40px;height:40px;flex:none}
+.brand .bt{display:block}
+.brand .bt span{color:var(--link)}
+.brand small{display:block;font:700 .68rem/1.4 var(--body);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.atmc{width:120px;height:120px}
 nav{display:flex;flex-wrap:wrap;align-items:center;gap:.2rem 1.1rem}
 nav a{color:var(--fg);text-decoration:none;font-weight:600;font-size:.98rem}
 nav a:hover{color:var(--link)}
@@ -144,7 +148,10 @@ footer .wrap{padding-block:2rem;font-size:.95rem;color:var(--muted);display:grid
   .sunday .label,.sunday p{grid-column:1/-1;display:block}
   .sunday .what{font-size:1.2rem}
   header.top .wrap{flex-wrap:nowrap}
-  .brand{font-size:1.15rem;white-space:nowrap}
+  .brand{font-size:1.05rem}
+  .brand img{width:34px;height:34px}
+  .brand small{font-size:.6rem}
+  .brand .bt span{display:block}
   nav{flex-wrap:nowrap;white-space:nowrap}
   nav a:not(.cta){display:none}
   .day{grid-template-columns:minmax(0,1fr)}
@@ -155,7 +162,7 @@ footer .wrap{padding-block:2rem;font-size:.95rem;color:var(--muted);display:grid
 <div class="demo"><div class="wrap">Design proposal for St John's Church. This is a demo, not the official website.</div></div>
 
 <header class="top"><div class="wrap">
-  <a class="brand" href="#top">St John's <span>Mosley Common</span></a>
+  <a class="brand" href="#top"><img src="cofe.png" alt="" width="40" height="40"><span class="bt"><small>The Church of England</small>St John's Church, <span>Mosley Common</span></span></a>
   <nav aria-label="Sections">
     <a class="keep" href="#diary">What's on</a><a href="#families">Kids</a><a href="#community">Community</a>
     <a href="#faith">Faith</a><a href="#team">Team</a><a href="#contact">Contact</a><a class="cta" href="#new">I'm new</a>
@@ -164,7 +171,7 @@ footer .wrap{padding-block:2rem;font-size:.95rem;color:var(--muted);display:grid
 
 <div class="hero" id="top"><div class="wrap">
   <div>
-    <p class="label">St John's Church · Mosley Common</p>
+    <p class="label">The Church of England · St John's Church · Mosley Common</p>
     <h1>You're <span>welcome</span> here.</h1>
     <p class="lede">A friendly church for all ages and backgrounds, making Jesus known in Mosley Common since 1887.</p>
     <div class="actions"><a class="btn sun" href="#new">Plan your first visit</a><a class="btn ghost" href="#diary">See what's on</a></div>
@@ -269,6 +276,7 @@ footer .wrap{padding-block:2rem;font-size:.95rem;color:var(--muted);display:grid
 
 <section id="team"><div class="wrap">
   <div class="head"><p class="label">Who's who</p><h2>Meet the team</h2>
+  <img class="atmc" src="atmc.jpg" alt="Astley, Tyldesley and Mosley Common Team Ministry logo" width="120" height="120">
   <p>St John's is one of three Church of England parishes in the Astley, Tyldesley and Mosley Common Team Ministry, with St Stephen's Astley, St George's Tyldesley and The Mission church at Shakerley Community Centre. We also work with our neighbours in Churches Together in Boothstown.</p></div>
   <dl class="team" id="team-list"></dl>
 </div></section>
@@ -302,7 +310,8 @@ footer .wrap{padding-block:2rem;font-size:.95rem;color:var(--muted);display:grid
 </div></section>
 
 <footer><div class="wrap">
-  <span>St John's Church, Mosley Common · Astley, Tyldesley and Mosley Common Team Ministry · Diocese of Manchester</span>
+  <img src="cofe-full.png" alt="The Church of England" width="120" style="height:auto">
+  <span>The Church of England · St John's Church, Mosley Common · Astley, Tyldesley and Mosley Common Team Ministry · Diocese of Manchester</span>
   <span>This website is provided by <a href="https://tyldesleymosley.co.uk">tyldesleymosley.co.uk</a>, courtesy of George Dobritoiu.</span>
 </div></footer>
 
